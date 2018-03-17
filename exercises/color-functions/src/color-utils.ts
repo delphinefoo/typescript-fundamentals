@@ -6,11 +6,11 @@ export function hexToRgb(hex: String) : {r: number, g: number, b: number} {
         let bVal = hex[2];
         return hexToRgb(`${rVal}${rVal}${gVal}${gVal}${bVal}${bVal}`);
     }
-    return {
-        r: parseInt(hex.substr(0,2),16),
-        g: parseInt(hex.substr(2,2),16),
-        b: parseInt(hex.substr(4,2),16)
-    };
+
+    let [r,g,b] = [0,2,4]
+        .map(offset => hex.substring(offset,offset + 2)) // ['ff','00','00]
+        .map(hexString => parseInt(hexString,16)); // [255,0,0]
+    return {r,g,b};
 }
 
 //TODO: Implement rgbToHex
