@@ -15,23 +15,9 @@ export function hexToRgb(hex: String) : {r: number, g: number, b: number} {
 
 //TODO: Implement rgbToHex
 export function rgbToHex(r: number, g: number, b: number): string {
-    let redVal = convertZeroRgbValue(preventIncorrectRgbValue(r).toString(16));
-    let greenVal = convertZeroRgbValue(preventIncorrectRgbValue(g).toString(16));
-    let blueVal = convertZeroRgbValue(preventIncorrectRgbValue(b).toString(16));
-    let result= redVal + greenVal + blueVal;
-    return result;
-}
-
-function convertZeroRgbValue(colorValue: string): string {
-    if (colorValue=== '0') colorValue = '00';
-    return colorValue;
-}
-
-function preventIncorrectRgbValue(colorValue: number): number {
-    if (colorValue > 255) {
-        colorValue = 255;
-    } else if (colorValue < 0) {
-        colorValue = 0;
-    }
-    return colorValue;
+    return [r,g,b]
+        .map(colorVal => colorVal>255 ? 255 : colorVal<0 ? 0 : colorVal)
+        .map(hexChannel => hexChannel.toString(16))
+        .map(decChannel => decChannel.length === 1 ? `${decChannel}${decChannel}` : decChannel)
+        .join('');
 }
